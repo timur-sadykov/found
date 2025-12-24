@@ -2,524 +2,244 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="FOUND — a simple, free lost & found board. Post what you found. Search what you lost. Claim safely." />
-  <title>FOUND — Lost & Found</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FOUND — Lost & Found for Cowpass</title>
+  <meta name="description" content="A simple, clean lost-and-found board. Found something? Post it. Lost something? Search & claim safely." />
+  <meta name="theme-color" content="#0b0f19" />
 
   <style>
     :root{
-      --bg0:#070a12;
-      --bg1:#0b1020;
+      --bg:#0b0f19;
       --card: rgba(255,255,255,.06);
       --card2: rgba(255,255,255,.04);
-      --line: rgba(255,255,255,.12);
       --txt: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.66);
-      --muted2: rgba(255,255,255,.52);
-      --accent: #6cf0d1;
-      --accent2:#7aa7ff;
-      --warn:#ffcc66;
-      --danger:#ff6b6b;
-      --shadow: 0 22px 80px rgba(0,0,0,.55);
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.12);
+      --accent:#7c5cff;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --shadow: 0 28px 90px rgba(0,0,0,.55);
       --r: 18px;
-      --r2: 26px;
-      --max: 1060px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--txt);
       background:
-        radial-gradient(1200px 700px at 12% 10%, rgba(108,240,209,.22), transparent 60%),
-        radial-gradient(900px 600px at 75% 20%, rgba(122,167,255,.18), transparent 60%),
-        radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
+        radial-gradient(1200px 700px at 15% 10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,.22), transparent 60%),
+        radial-gradient(700px 450px at 55% 90%, rgba(245,158,11,.18), transparent 60%),
+        linear-gradient(180deg, #070a12, var(--bg) 30%, #070a12);
     }
-
-    a{ color: inherit; text-decoration: none; }
-    .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px 18px 60px; }
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding: 14px 0 10px;
-      position: sticky; top:0;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(7,10,18,.72), rgba(7,10,18,.18));
-      z-index: 30;
+    a{color:inherit}
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 70px}
+    .top{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      position:sticky;top:0;backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,15,25,.85), rgba(11,15,25,.55));
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:14px 18px; border-radius: 0 0 16px 16px;
+      z-index:10;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      letter-spacing:.3px;
-    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.6px}
     .logo{
-      width:34px; height:34px; border-radius:12px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.95), transparent 55%),
-        linear-gradient(135deg, rgba(108,240,209,1), rgba(122,167,255,1));
-      box-shadow: 0 10px 30px rgba(108,240,209,.12);
+      width:34px;height:34px;border-radius:10px;
+      background: conic-gradient(from 180deg, var(--accent), var(--accent2), var(--warn), var(--accent));
+      box-shadow: 0 14px 50px rgba(124,92,255,.28);
     }
-    .brand b{ font-size: 14px; }
+    .nav{display:flex;gap:10px;flex-wrap:wrap}
     .pill{
-      display:flex; gap:10px; align-items:center;
-      border:1px solid var(--line); background: rgba(255,255,255,.04);
-      padding: 9px 12px; border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      text-decoration:none;
+      font-weight:650;
     }
-    .pill code{
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(255,255,255,.82);
-    }
-    .nav{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    }
-    .nav a{
-      font-size: 12px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-    .nav a:hover{
-      border-color: var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--txt);
-    }
-
+    .pill:hover{transform: translateY(-1px); transition: .12s ease; background: rgba(255,255,255,.08)}
     .hero{
-      padding: 56px 0 18px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 22px;
-      align-items: start;
-    }
-    @media (max-width: 880px){
-      .hero{ grid-template-columns: 1fr; padding-top: 34px; }
-      .topbar{ position: relative; backdrop-filter:none; background: transparent; }
-    }
-
-    h1{
-      margin: 0 0 12px;
-      font-size: 56px;
-      line-height: 1.02;
-      letter-spacing: -1.2px;
-    }
-    .sub{
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.55;
-      max-width: 58ch;
-    }
-    .ctaRow{ display:flex; gap: 12px; flex-wrap:wrap; margin: 18px 0 10px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--txt);
-      font-weight: 650;
-      letter-spacing: .2px;
-      box-shadow: none;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); }
-    .btnPrimary{
-      border-color: rgba(108,240,209,.45);
-      background: linear-gradient(135deg, rgba(108,240,209,.22), rgba(122,167,255,.16));
-    }
-    .btnDanger{
-      border-color: rgba(255,107,107,.45);
-      background: linear-gradient(135deg, rgba(255,107,107,.18), rgba(255,204,102,.10));
-    }
-    .btnSmall{
-      padding: 9px 11px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .kpiRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    .kpi{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: 14px;
-      padding: 10px 12px;
-      min-width: 160px;
-    }
-    .kpi b{ display:block; font-size: 13px; }
-    .kpi span{ color: var(--muted); font-size: 12px; }
-
-    .panel{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--r2);
+      margin-top:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
+      border-radius: calc(var(--r) + 8px);
       overflow:hidden;
-    }
-    .panelTop{
-      padding: 14px 14px 10px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .panelTop b{ font-size: 13px; }
-    .panelTop span{ color: var(--muted); font-size: 12px; }
-    .panelBody{ padding: 14px; }
-    .searchBox{
-      display:flex; gap:10px; align-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      border-radius: 16px;
-      padding: 10px 12px;
-    }
-    .searchBox input{
-      flex:1;
-      background: transparent;
-      border:0;
-      outline:none;
-      color: var(--txt);
-      font-size: 14px;
-    }
-    .searchBox input::placeholder{ color: rgba(255,255,255,.38); }
-    .chipRow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 10px; }
-    .chip{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .chip:hover{ color: var(--txt); border-color: rgba(255,255,255,.18); }
-
-    .grid{
-      margin-top: 26px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-    .card{
-      grid-column: span 4;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--r2);
-      padding: 16px;
       position:relative;
-      overflow:hidden;
     }
-    .card:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        radial-gradient(500px 180px at 20% 20%, rgba(108,240,209,.14), transparent 55%),
-        radial-gradient(420px 200px at 80% 20%, rgba(122,167,255,.12), transparent 55%);
-      opacity:.6;
-      pointer-events:none;
-    }
-    .card > *{ position:relative; }
-    .card h3{ margin: 2px 0 8px; font-size: 15px; letter-spacing: -.2px; }
-    .card p{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
-    .tag{
-      display:inline-flex;
+    .hero-inner{padding:34px 24px 26px;display:grid;grid-template-columns: 1.2fr .8fr;gap:18px}
+    @media (max-width:880px){.hero-inner{grid-template-columns:1fr}}
+    h1{margin:0 0 10px;font-size:44px;line-height:1.02;letter-spacing:-.6px}
+    .sub{color:var(--muted);font-size:16px;line-height:1.55;max-width:56ch}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .btn{
       border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.78);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      margin-bottom: 10px;
-      font-family: var(--mono);
+      background: rgba(255,255,255,.06);
+      color:var(--txt);
+      padding:12px 14px;border-radius:14px;
+      font-weight:750;
+      text-decoration:none;
+      display:inline-flex;align-items:center;gap:10px;
     }
-    .card .miniRow{ margin-top: 12px; display:flex; gap:8px; flex-wrap:wrap; }
-
-    @media (max-width: 920px){
-      .card{ grid-column: span 6; }
-      h1{ font-size: 44px; }
+    .btn.primary{background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.45)); border-color: rgba(124,92,255,.55)}
+    .btn.good{background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.35)); border-color: rgba(34,197,94,.55)}
+    .btn:hover{transform: translateY(-1px); transition: .12s ease}
+    .cards{display:grid;grid-template-columns: repeat(3, 1fr);gap:12px;padding:0 24px 24px}
+    @media (max-width:880px){.cards{grid-template-columns:1fr}}
+    .card{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--r);
+      padding:14px;
     }
-    @media (max-width: 560px){
-      .card{ grid-column: span 12; }
-      h1{ font-size: 38px; }
+    .k{font-weight:800}
+    .m{color:var(--muted);font-size:13.5px;line-height:1.45;margin-top:6px}
+    .right{
+      padding:22px;
+      border-left:1px solid rgba(255,255,255,.08);
+      background: radial-gradient(900px 700px at 0% 0%, rgba(255,255,255,.06), transparent 60%);
     }
-
-    .sectionTitle{
-      margin: 28px 0 10px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap: 12px;
+    @media (max-width:880px){.right{border-left:none;border-top:1px solid rgba(255,255,255,.08)}}
+    .panel{
+      border-radius: var(--r);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      padding:14px;
     }
-    .sectionTitle h2{
-      margin:0;
-      font-size: 18px;
-      letter-spacing: -.2px;
+    .steps{display:grid;gap:10px;margin-top:10px}
+    .step{display:flex;gap:10px}
+    .num{
+      width:28px;height:28px;border-radius:9px;
+      display:grid;place-items:center;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:800;
     }
-    .sectionTitle span{
-      color: var(--muted2);
-      font-size: 12px;
+    .step p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+    .faq{margin-top:18px;padding:0 24px 24px}
+    details{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--r);
+      padding:12px 14px;
+      margin-top:10px;
     }
-
-    .footer{
-      margin-top: 34px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-      color: var(--muted2);
-      font-size: 12px;
+    summary{cursor:pointer;font-weight:750}
+    .foot{
+      margin-top:18px;
+      color: rgba(255,255,255,.55);
+      font-size:12.5px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding:0 6px;
     }
-
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,.58);
-      border: 1px solid rgba(255,255,255,.16);
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: rgba(255,255,255,.86);
-      font-size: 12px;
-      display:none;
-      z-index: 50;
-      backdrop-filter: blur(10px);
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.70);
+      font-size:12px;
     }
-    .toast.show{ display:block; animation: pop .18s ease; }
-    @keyframes pop{ from{ transform: translateX(-50%) translateY(6px); opacity:0; } to{ transform: translateX(-50%) translateY(0); opacity:1; } }
+    .dot{width:8px;height:8px;border-radius:50%;background: var(--accent2); box-shadow: 0 0 0 6px rgba(34,197,94,.12)}
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <b>FOUND</b><br>
-          <span style="color:var(--muted); font-size:12px;">Lost &amp; Found board</span>
-        </div>
-      </div>
-
-      <div class="nav">
-        <a href="#how">How it works</a>
-        <a href="#safety">Safety</a>
-        <a href="#faq">FAQ</a>
-        <a class="btn btnSmall" href="https://timur-sadykov.github.io/found/" title="GitHub Pages fallback">Fallback</a>
-      </div>
+  <div class="top">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>FOUND</div>
+      <span class="badge"><span class="dot"></span> live</span>
     </div>
-
-    <div class="hero">
-      <div>
-        <h1>Lost something?<br>Found something?</h1>
-        <p class="sub">
-          A simple, free lost &amp; found board. Post what you found. Search what you lost.
-          Keep it fast. Keep it safe.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn btnPrimary" href="found.html" id="btnFound">I FOUND something</a>
-          <a class="btn btnDanger" href="lost.html" id="btnLost">I LOST something</a>
-          <button class="btn" id="btnBrowse" type="button">Browse listings</button>
-        </div>
-
-        <div class="kpiRow">
-          <div class="kpi">
-            <b>No accounts</b>
-            <span>Open for everyone</span>
-          </div>
-          <div class="kpi">
-            <b>No ads</b>
-            <span>Clean &amp; minimal</span>
-          </div>
-          <div class="kpi">
-            <b>Privacy-first</b>
-            <span>Share only what’s needed</span>
-          </div>
-        </div>
-
-        <div class="sectionTitle" id="how">
-          <h2>How it works</h2>
-          <span>3 steps, done.</span>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <div class="tag">01 / Post</div>
-            <h3>Post what you found (or lost)</h3>
-            <p>Choose category, location, date. Add a photo link if you have it. Keep it short.</p>
-            <div class="miniRow">
-              <span class="chip" data-fill="wallet">wallet</span>
-              <span class="chip" data-fill="keys">keys</span>
-              <span class="chip" data-fill="phone">phone</span>
-              <span class="chip" data-fill="bag">bag</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="tag">02 / Search</div>
-            <h3>Search in seconds</h3>
-            <p>Search by item + place. Use simple words: “AirPods Zurich HB”, “keys Wetzikon”.</p>
-            <div class="miniRow">
-              <span class="chip" data-fill="Zurich HB">Zurich HB</span>
-              <span class="chip" data-fill="Bonaduz">Bonaduz</span>
-              <span class="chip" data-fill="Wetzikon">Wetzikon</span>
-            </div>
-          </div>
-
-          <div class="card" id="safety">
-            <div class="tag">03 / Claim safely</div>
-            <h3>Verify before you hand over</h3>
-            <p>Never share sensitive details publicly. Use a safe meeting point and ask for proof.</p>
-            <div class="miniRow">
-              <span class="chip" data-fill="proof">ask for proof</span>
-              <span class="chip" data-fill="police station">police station</span>
-              <span class="chip" data-fill="public place">public place</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="sectionTitle" id="faq">
-          <h2>FAQ</h2>
-          <span>Short &amp; clear</span>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <div class="tag">FAQ</div>
-            <h3>Can I post anonymously?</h3>
-            <p>Yes. Use a temporary contact method (or a nickname). Don’t post phone numbers publicly if you can avoid it.</p>
-          </div>
-
-          <div class="card">
-            <div class="tag">FAQ</div>
-            <h3>Why no account?</h3>
-            <p>Less friction. Faster help. The goal is simple: connect the right people safely.</p>
-          </div>
-
-          <div class="card">
-            <div class="tag">FAQ</div>
-            <h3>What’s next?</h3>
-            <p>We can add a Google Form submission + a live list from a Google Sheet, still without a backend.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panelTop">
-          <div>
-            <b>Quick search</b><br>
-            <span>Type keywords, we’ll suggest a safe search flow.</span>
-          </div>
-          <a class="btn btnSmall" href="#how">Learn</a>
-        </div>
-
-        <div class="panelBody">
-          <div class="searchBox">
-            <span style="opacity:.8">🔎</span>
-            <input id="q" placeholder='e.g. "keys Zurich HB" or "wallet Wetzikon"' />
-            <button class="btn btnSmall" id="doSearch" type="button">Search</button>
-          </div>
-
-          <div class="chipRow">
-            <span class="chip" data-fill="keys Zurich HB">keys Zurich HB</span>
-            <span class="chip" data-fill="wallet Wetzikon">wallet Wetzikon</span>
-            <span class="chip" data-fill="AirPods Bonaduz">AirPods Bonaduz</span>
-            <span class="chip" data-fill="passport">passport</span>
-          </div>
-
-          <div style="margin-top:14px; border-top:1px solid rgba(255,255,255,.10); padding-top:14px;">
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn" href="found.html">Post FOUND</a>
-              <a class="btn" href="lost.html">Post LOST</a>
-              <button class="btn" id="copyLink" type="button">Copy site link</button>
-            </div>
-
-            <p style="margin:12px 0 0; color:var(--muted2); font-size:12px; line-height:1.5;">
-              Tip: for claiming, ask the owner to describe a unique detail (scratch, sticker, serial, exact content).
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="nav">
+      <a class="pill" href="found.html">I FOUND something</a>
+      <a class="pill" href="lost.html">I LOST something</a>
+      <a class="pill" href="#safety">Safety</a>
+      <a class="pill" href="#faq">FAQ</a>
     </div>
-
-    <div class="footer">
-      <div>© <span id="y"></span> FOUND — Made to reunite people with their stuff.</div>
-      <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="found.html">Found</a>
-        <a href="lost.html">Lost</a>
-        <a href="https://github.com/timur-sadykov/found" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Lost & Found,<br/>done right.</h1>
+          <div class="sub">
+            Post a found item in 30 seconds. Report a lost item.  
+            Match safely — no spam, no accounts, no drama.
+          </div>
+
+          <div class="cta">
+            <a class="btn good" href="found.html">✅ I FOUND something</a>
+            <a class="btn primary" href="lost.html">🔎 I LOST something</a>
+            <a class="btn" href="#safety">🛡️ Safety rules</a>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="panel">
+            <div class="k">How it works</div>
+            <div class="steps">
+              <div class="step"><div class="num">1</div><p><b>Found?</b> post what you found + where + when.</p></div>
+              <div class="step"><div class="num">2</div><p><b>Lost?</b> describe the item + last seen details.</p></div>
+              <div class="step"><div class="num">3</div><p>We connect people via a secure contact step (no public phone numbers).</p></div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="panel" id="safety">
+            <div class="k">Safety first</div>
+            <div class="m">
+              Never share sensitive data publicly.  
+              Meet in a public place. Verify ownership using a “private detail”
+              (serial, scratch, sticker, unique mark).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="k">No accounts</div>
+          <div class="m">Fast posting. Less friction. More returns.</div>
+        </div>
+        <div class="card">
+          <div class="k">Clean & minimal</div>
+          <div class="m">Works on mobile. Loads instantly.</div>
+        </div>
+        <div class="card">
+          <div class="k">Privacy-aware</div>
+          <div class="m">We discourage public phone numbers & addresses.</div>
+        </div>
+      </div>
+
+      <div class="faq" id="faq">
+        <details>
+          <summary>How do I prove an item is mine?</summary>
+          <div class="m">Use one private detail only the owner knows (unique mark, exact contents, serial, etc.).</div>
+        </details>
+        <details>
+          <summary>Can I post valuables (wallet / keys)?</summary>
+          <div class="m">Yes — but never post full ID details or key photos. Describe generally and verify privately.</div>
+        </details>
+        <details>
+          <summary>Is this official?</summary>
+          <div class="m">No. It’s a community tool. Use common sense and safety rules.</div>
+        </details>
+
+        <div class="foot">
+          <div>© <span id="y"></span> FOUND</div>
+          <div>Made for Cowpass. Fast. Simple. Safe.</div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <script>
-    const toast = (msg) => {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(window.__t);
-      window.__t = setTimeout(()=>t.classList.remove('show'), 1600);
-    };
-
     document.getElementById('y').textContent = new Date().getFullYear();
-
-    // chips -> fill search
-    document.querySelectorAll('.chip[data-fill]').forEach(c=>{
-      c.addEventListener('click', ()=>{
-        document.getElementById('q').value = c.getAttribute('data-fill');
-        toast('Filled search');
-      });
-    });
-
-    // browse button (for now just scroll to FAQ / later we’ll connect to Sheet)
-    document.getElementById('btnBrowse').addEventListener('click', ()=>{
-      document.getElementById('q').focus();
-      toast('Search something you lost');
-    });
-
-    // search: for MVP we redirect to lost page with query hash
-    const runSearch = () => {
-      const q = (document.getElementById('q').value || '').trim();
-      if (!q) { toast('Type a keyword first'); return; }
-      // You can later replace this with a real listing page.
-      location.href = 'lost.html#q=' + encodeURIComponent(q);
-    };
-    document.getElementById('doSearch').addEventListener('click', runSearch);
-    document.getElementById('q').addEventListener('keydown', (e)=>{ if(e.key==='Enter') runSearch(); });
-
-    // copy link
-    document.getElementById('copyLink').addEventListener('click', async ()=>{
-      const url = location.origin + location.pathname.replace(/index\.html$/, '');
-      try {
-        await navigator.clipboard.writeText(url);
-        toast('Link copied');
-      } catch {
-        toast('Copy not allowed in this browser');
-      }
-    });
   </script>
 </body>
 </html>
