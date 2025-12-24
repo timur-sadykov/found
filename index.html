@@ -1,209 +1,428 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FOUND — нашёл / потерял</title>
-  <meta name="description" content="Простой бесплатный сервис: нашёл вещь — помоги вернуть. Потерял — попробуй найти." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A simple, free lost-and-found board: found something → post it. Lost something → search & claim safely." />
+  <title>FOUND — Free Lost & Found</title>
+
   <style>
     :root{
-      --bg:#0b0d12;
-      --card:#121622;
-      --text:#e9edf7;
-      --muted:#9aa6c3;
-      --accent:#8a2be2;
-      --accent2:#00d4ff;
-      --line:rgba(255,255,255,.08);
-      --ok:#40ffb2;
-      --warn:#ffcc66;
+      --bg:#0b0f19;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.04);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --line: rgba(255,255,255,.10);
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --radius: 18px;
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 600px at 20% 0%, rgba(138,43,226,.25), transparent 55%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(0,212,255,.18), transparent 60%),
-                  var(--bg);
-      color:var(--text);
-      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(34,197,94,.25), transparent 60%),
+        radial-gradient(700px 400px at 50% 90%, rgba(245,158,11,.18), transparent 60%),
+        linear-gradient(180deg, #070a12, #0b0f19 30%, #070a12);
+      overflow-x:hidden;
     }
     a{color:inherit}
-    .wrap{max-width:980px;margin:0 auto;padding:26px 18px 48px}
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 80px}
     .top{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 0 22px;border-bottom:1px solid var(--line);
+      padding:10px 0 18px;
     }
-    .brand{display:flex;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
     .logo{
-      width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(138,43,226,.95), rgba(0,212,255,.9));
-      box-shadow: 0 18px 60px rgba(138,43,226,.25);
+      width:42px;height:42px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.85));
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;
+      position:relative; overflow:hidden;
     }
-    .brand h1{font-size:18px;margin:0;letter-spacing:.5px}
-    .brand p{margin:0;color:var(--muted);font-size:13px}
-    .mini{
-      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.30), transparent);
+      transform: rotate(25deg);
+      animation: shine 3.8s infinite;
     }
+    @keyframes shine{
+      0%{transform:translateX(-60%) rotate(25deg)}
+      55%{transform:translateX(60%) rotate(25deg)}
+      100%{transform:translateX(60%) rotate(25deg)}
+    }
+    .logo span{font-weight:900;letter-spacing:.5px}
+    .brand b{font-size:16px;letter-spacing:.2px}
+    .brand small{display:block;color:var(--muted2);margin-top:2px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .pill{
-      border:1px solid var(--line);
-      color:var(--muted);
-      padding:8px 10px;border-radius:999px;font-size:12px;text-decoration:none;
-      background: rgba(255,255,255,.02);
+      padding:10px 12px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(255,255,255,.03);
+      text-decoration:none;color:var(--muted);
+      transition:.2s transform,.2s background;
     }
-    .hero{padding:26px 0 14px}
-    .hero h2{font-size:38px;line-height:1.08;margin:0 0 10px}
-    .hero p{margin:0;color:var(--muted);font-size:16px;max-width:720px}
+    .pill:hover{transform:translateY(-1px);background:rgba(255,255,255,.06);color:var(--txt)}
+    .hero{
+      margin-top:10px;
+      padding:26px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 180px at 20% 0%, rgba(124,58,237,.35), transparent 65%),
+                  radial-gradient(520px 160px at 85% 20%, rgba(34,197,94,.25), transparent 60%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
     .grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:18px;
+      position:relative;
     }
-    @media (max-width:820px){ .grid{grid-template-columns:1fr} .hero h2{font-size:32px} }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      box-shadow: 0 20px 80px rgba(0,0,0,.35);
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
     }
-    .card h3{margin:0 0 8px;font-size:18px}
-    .card p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.45}
-    .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+    h1{
+      margin:0 0 12px;
+      font-size: clamp(28px, 3.3vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.7px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.5;
+      max-width: 62ch;
+      margin:0 0 18px;
+    }
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 14px;border-radius:14px;text-decoration:none;font-weight:650;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
+      appearance:none;border:0;cursor:pointer;
+      padding:12px 14px;border-radius:14px;
+      font-weight:700;
+      background:rgba(255,255,255,.08);
+      color:var(--txt);
+      border:1px solid rgba(255,255,255,.12);
+      text-decoration:none;
+      transition:.18s transform,.18s filter,.18s background;
+      display:inline-flex;align-items:center;gap:10px;
     }
+    .btn:hover{transform: translateY(-1px);filter: brightness(1.05);background:rgba(255,255,255,.10)}
     .btn.primary{
-      border-color: transparent;
-      background: linear-gradient(135deg, rgba(138,43,226,.92), rgba(0,212,255,.86));
-      box-shadow: 0 18px 60px rgba(0,212,255,.12);
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,.9));
+      border-color: rgba(255,255,255,.0);
+      box-shadow: 0 20px 60px rgba(124,58,237,.25);
     }
-    .btn span{opacity:.9}
-    .rules{margin-top:14px}
-    .rule{
-      display:flex;gap:12px;padding:12px 12px;border-radius:14px;
-      border:1px solid var(--line);background: rgba(0,0,0,.18);
-      margin-top:10px
+    .btn.secondary{
+      background: rgba(34,197,94,.10);
+      border-color: rgba(34,197,94,.35);
     }
-    .dot{width:10px;height:10px;border-radius:999px;margin-top:4px}
-    .dot.ok{background:var(--ok)}
-    .dot.warn{background:var(--warn)}
-    .rule b{display:block;margin-bottom:4px}
-    .footer{
-      margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
-      color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
+    .btn.warn{
+      background: rgba(245,158,11,.10);
+      border-color: rgba(245,158,11,.35);
     }
-    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px;background: rgba(255,255,255,.06);border:1px solid var(--line);padding:2px 6px;border-radius:8px;color:var(--text)}
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card2);
+      padding:16px;
+    }
+    .card h3{margin:0 0 8px;font-size:14px;color:var(--muted)}
+    .kpi{display:grid;gap:10px}
+    .kpiBox{
+      padding:12px;border-radius:16px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .kpiBox b{display:block;font-size:18px}
+    .kpiBox span{color:var(--muted2);font-size:13px;line-height:1.35}
+    .section{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .section{grid-template-columns:1fr}
+    }
+    .tile{
+      padding:16px;border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    .tile b{display:block;margin-bottom:8px}
+    .tile p{margin:0;color:var(--muted);line-height:1.45}
+    .divider{
+      margin:18px 0;
+      height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+      border:0;
+    }
+    .recent{
+      margin-top:14px;
+      display:grid;grid-template-columns: 1.2fr .8fr;gap:14px;
+    }
+    @media (max-width: 900px){
+      .recent{grid-template-columns:1fr}
+    }
+    .search{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+    }
+    input{
+      flex:1;min-width:180px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--txt);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+    input::placeholder{color:rgba(255,255,255,.40)}
+    .list{display:grid;gap:10px;margin-top:12px}
+    .item{
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+    }
+    .item b{display:block}
+    .meta{color:var(--muted2);font-size:13px;margin-top:4px;line-height:1.3}
+    .tag{
+      font-size:12px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.80);
+      background:rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+    footer{
+      margin-top:26px;color:var(--muted2);font-size:13px;line-height:1.5;
+      text-align:center;
+    }
+    .note{
+      margin-top:12px;
+      padding:12px 14px;border-radius:16px;
+      border:1px solid rgba(245,158,11,.22);
+      background: rgba(245,158,11,.06);
+      color: rgba(255,255,255,.85);
+    }
+    .small{font-size:12px;color:var(--muted2)}
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+      <a class="brand" href="#top">
+        <div class="logo" aria-hidden="true"><span>F</span></div>
         <div>
-          <h1>FOUND</h1>
-          <p>нашёл / потерял — без бюрократии</p>
+          <b>FOUND</b>
+          <small>Free, simple, community lost & found</small>
         </div>
-      </div>
-      <div class="mini">
-        <a class="pill" href="#rules">как это работает</a>
-        <a class="pill" href="#safety">защита от мошенников</a>
-        <a class="pill" href="#contact">контакт</a>
+      </a>
+
+      <div class="nav">
+        <a class="pill" href="#how">How it works</a>
+        <a class="pill" href="#recent">Recent</a>
+        <a class="pill" href="#rules">Anti-scam rules</a>
+        <a class="pill" href="#contact">Contact</a>
       </div>
     </div>
 
-    <section class="hero">
-      <h2>Вернём вещи людям.<br/>Просто. Бесплатно.</h2>
-      <p>
-        Ты нашёл вещь — опубликуй находку без лишних деталей, чтобы хозяин мог доказать, что это его.
-        Потерял — оставь заявку, и если совпадёт — вы встретитесь и вернёте.
-      </p>
-
+    <section class="hero" id="top">
       <div class="grid">
-        <div class="card">
-          <h3>Я НАШЁЛ вещь</h3>
-          <p>Добавь фото + место + дату. Важно: не публикуй “секретный признак”. Пусть его назовёт владелец.</p>
-          <div class="btnrow">
-            <a class="btn primary" href="PASTE_FOUND_FORM_LINK" target="_blank" rel="noopener">
-              <span>Заполнить форму</span> →
-            </a>
-            <a class="btn" href="#safety"><span>как не отдать мошеннику</span></a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Я ПОТЕРЯЛ вещь</h3>
-          <p>Опиши максимально точно. Добавь “секретный признак” — то, чего нет на фото находки.</p>
-          <div class="btnrow">
-            <a class="btn primary" href="PASTE_LOST_FORM_LINK" target="_blank" rel="noopener">
-              <span>Заполнить форму</span> →
-            </a>
-            <a class="btn" href="#rules"><span>как работает</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div id="rules" class="rules card">
-        <h3>Как это работает</h3>
-        <div class="rule">
-          <div class="dot ok"></div>
-          <div>
-            <b>1) Нашёл → публикуешь находку</b>
-            Фото + где/когда. Никаких уникальных деталей в открытом виде.
-          </div>
-        </div>
-        <div class="rule">
-          <div class="dot ok"></div>
-          <div>
-            <b>2) Потерял → публикуешь потерю</b>
-            Пишешь “секретный признак” (скрытый), который докажет владение.
-          </div>
-        </div>
-        <div class="rule">
-          <div class="dot ok"></div>
-          <div>
-            <b>3) Совпало → связываетесь и передаёте</b>
-            В идеале: public place / охрана молла / Fundbüro.
-          </div>
-        </div>
-      </div>
-
-      <div id="safety" class="rules card">
-        <h3>Защита от мошенников</h3>
-        <div class="rule">
-          <div class="dot warn"></div>
-          <div>
-            <b>Не выкладывай всё</b>
-            Если на вещи есть маркировка/царапина/особенность — оставь это как “ключ”.
-          </div>
-        </div>
-        <div class="rule">
-          <div class="dot warn"></div>
-          <div>
-            <b>Проси доказательство</b>
-            Фото пары / чек / коробка / фото на человеке / точный секретный признак.
-          </div>
-        </div>
-        <div class="rule">
-          <div class="dot warn"></div>
-          <div>
-            <b>Передача только безопасно</b>
-            Публичное место. Никаких “вышли курьером на другой адрес” без адекватной верификации.
-          </div>
-        </div>
-      </div>
-
-      <div id="contact" class="footer">
         <div>
-          Контакт для связи: <span class="kbd">Telegram: @YOUR_HANDLE</span> или <span class="kbd">email@domain.com</span>
+          <h1>Found something?<br/>Help it find its owner.</h1>
+          <p class="sub">
+            No accounts. No paywalls. No drama.
+            Just post a short description and let the real owner prove it.
+          </p>
+
+          <div class="ctaRow">
+            <!-- TODO: replace links with your Google Forms -->
+            <a class="btn primary" href="PASTE_FOUND_FORM_LINK_HERE" target="_blank" rel="noopener">
+              ✅ I found an item
+            </a>
+            <a class="btn secondary" href="PASTE_LOST_FORM_LINK_HERE" target="_blank" rel="noopener">
+              🔎 I lost an item
+            </a>
+            <a class="btn warn" href="#rules">
+              🛡️ Prevent scams
+            </a>
+          </div>
+
+          <div class="note">
+            <b>Owner verification rule:</b>
+            never reveal the full details publicly. The owner must describe a hidden detail (engraving, exact marks, scratches, where it was found, etc.).
+          </div>
+
+          <div class="small" style="margin-top:10px">
+            Tip: if you found something valuable, keep it safe. Post only safe hints.
+          </div>
         </div>
-        <div>
-          Принцип: бесплатно навсегда. Никаких комиссий.
+
+        <div class="card">
+          <h3>Why this exists</h3>
+          <div class="kpi">
+            <div class="kpiBox">
+              <b>1 page</b>
+              <span>Fast on mobile. Easy for everyone.</span>
+            </div>
+            <div class="kpiBox">
+              <b>0 CHF</b>
+              <span>Free forever. Built for humans.</span>
+            </div>
+            <div class="kpiBox">
+              <b>Proof-first</b>
+              <span>Owner proves it — scammers get nothing.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="section" id="how">
+        <div class="tile">
+          <b>1) Post a hint</b>
+          <p>Category + city + date + 1–2 photos (optional). Keep key details secret.</p>
+        </div>
+        <div class="tile">
+          <b>2) Owner claims with proof</b>
+          <p>They must describe a hidden detail only the real owner knows.</p>
+        </div>
+        <div class="tile">
+          <b>3) Handover safely</b>
+          <p>Meet in a public place. Or use a trusted third party if needed.</p>
         </div>
       </div>
     </section>
+
+    <section class="recent" id="recent" style="margin-top:16px">
+      <div class="card">
+        <h3>Recent finds (demo list)</h3>
+
+        <div class="search">
+          <input id="q" placeholder="Search: earring, Zurich, Sihlcity, keys..." />
+          <button class="btn" id="btnSearch" type="button">Search</button>
+          <button class="btn" id="btnClear" type="button">Clear</button>
+        </div>
+
+        <div class="list" id="list">
+          <!-- Demo items; you will replace or auto-generate later -->
+          <div class="item" data-text="earring zurich sihlcity gold">
+            <div>
+              <b>Earring (single) — Zurich (Sihlcity)</b>
+              <div class="meta">Found: Dec 2025 • Hint: tiny hallmark inside</div>
+            </div>
+            <div class="tag">FOUND</div>
+          </div>
+
+          <div class="item" data-text="keys basel">
+            <div>
+              <b>Keys — Basel</b>
+              <div class="meta">Found: (example) • Hint: keychain color</div>
+            </div>
+            <div class="tag">FOUND</div>
+          </div>
+
+          <div class="item" data-text="wallet bern">
+            <div>
+              <b>Wallet — Bern</b>
+              <div class="meta">Found: (example) • Hint: brand only</div>
+            </div>
+            <div class="tag">FOUND</div>
+          </div>
+        </div>
+
+        <div class="note">
+          This list is a placeholder. Next step: we’ll connect it to a Google Sheet automatically.
+        </div>
+      </div>
+
+      <div class="card" id="rules">
+        <h3>Anti-scam rules (simple)</h3>
+        <div class="list">
+          <div class="item">
+            <div>
+              <b>Keep 1 secret detail</b>
+              <div class="meta">Engraving, exact mark, exact place, scratch, serial, etc.</div>
+            </div>
+            <div class="tag">RULE</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>No “tell me what it is” claims</b>
+              <div class="meta">Real owner describes it without fishing.</div>
+            </div>
+            <div class="tag">RULE</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>Safe handover</b>
+              <div class="meta">Public place, daylight, no pressure.</div>
+            </div>
+            <div class="tag">RULE</div>
+          </div>
+          <div class="item">
+            <div>
+              <b>If it’s very valuable</b>
+              <div class="meta">Consider official lost & found or police in your city.</div>
+            </div>
+            <div class="tag" style="border-color:rgba(245,158,11,.35)">SAFE</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="contact" style="margin-top:14px">
+      <h3>Contact</h3>
+      <div class="meta">
+        Want to help improve this project or report abuse?
+        <br/>
+        Email: <a href="mailto:found@cowpass.ch">found@cowpass.ch</a> (change if you want)
+      </div>
+    </section>
+
+    <footer>
+      Built in Switzerland. Made for people who still believe in returning things.
+      <br/>
+      <span class="small">No cookies. No tracking. No accounts. (If you keep it that way.)</span>
+    </footer>
   </div>
+
+  <script>
+    const q = document.getElementById('q');
+    const list = document.getElementById('list');
+    const items = Array.from(list.querySelectorAll('.item'));
+
+    function runSearch(){
+      const s = (q.value || '').trim().toLowerCase();
+      items.forEach(el => {
+        const t = (el.getAttribute('data-text') || '').toLowerCase();
+        el.style.display = (!s || t.includes(s)) ? '' : 'none';
+      });
+    }
+    document.getElementById('btnSearch').addEventListener('click', runSearch);
+    document.getElementById('btnClear').addEventListener('click', () => { q.value=''; runSearch(); });
+    q.addEventListener('keydown', (e)=>{ if(e.key==='Enter') runSearch(); });
+  </script>
 </body>
 </html>
