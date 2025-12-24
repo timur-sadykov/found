@@ -3,45 +3,135 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FOUND — I Lost Something</title>
-  <meta name="description" content="Report a lost item safely." />
+  <title>Post a LOST item — FOUND</title>
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:#0b0f19;color:rgba(255,255,255,.92)}
-    .wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+    :root{--bg:#07080b;--card:#0e1117;--muted:#9aa4b2;--text:#e6edf3;--line:#1f2630;--accent:#22c55e;--shadow:0 18px 60px rgba(0,0,0,.55);--r:18px;}
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:radial-gradient(1200px 700px at 85% 10%, rgba(34,197,94,.14), transparent 60%), var(--bg);}
+    .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
     a{color:inherit}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:10px 12px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);font-weight:750}
-    .card{margin-top:14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);padding:14px}
-    .muted{color:rgba(255,255,255,.68);line-height:1.5}
-    iframe{width:100%;height:900px;border:0;border-radius:14px;background:#fff}
-    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
+    .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#60a5fa);box-shadow:0 0 0 4px rgba(34,197,94,.10)}
+    .pill{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:8px 10px;border-radius:999px;background:rgba(14,17,23,.7)}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg, rgba(14,17,23,.92), rgba(14,17,23,.65));border-radius:var(--r);box-shadow:var(--shadow);padding:22px}
+    h1{margin:0 0 8px;font-size:26px}
+    p{margin:0 0 14px;color:var(--muted);line-height:1.6}
+    form{display:grid;gap:12px;margin-top:12px}
+    label{font-size:13px;color:#cbd5e1}
+    input,select,textarea{width:100%;border:1px solid var(--line);background:rgba(7,8,11,.35);color:var(--text);border-radius:14px;padding:11px 12px;outline:none}
+    textarea{min-height:110px;resize:vertical}
+    .row{display:grid;gap:12px}
+    @media (min-width:760px){.row{grid-template-columns:1fr 1fr}}
+    .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(14,17,23,.85);text-decoration:none;font-weight:800;font-size:14px;cursor:pointer;transition:transform .08s ease,border-color .12s ease}
+    .btn:hover{transform:translateY(-1px);border-color:rgba(34,197,94,.55)}
+    .btn.primary{background:linear-gradient(135deg, rgba(34,197,94,.95), rgba(16,185,129,.7));border-color:transparent}
+    .hint{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+    .k{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="top">
-      <div>
-        <h1 style="margin:0 0 6px">🔎 I lost something</h1>
-        <div class="muted">Describe your item. Be specific, but keep sensitive info private.</div>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn" href="index.html">← Home</a>
-        <a class="btn" href="found.html">I found something</a>
-      </div>
+      <div class="brand"><span class="dot"></span><a href="./index.html" style="text-decoration:none">FOUND</a></div>
+      <div class="pill">LOST → GitHub Issue (free)</div>
     </div>
 
-    <div class="card">
-      <b>Privacy rule:</b>
-      <div class="muted">Never post passport / full address / full phone. Use email or Telegram handle if needed.</div>
-    </div>
+    <section class="card">
+      <h1>Post a LOST item</h1>
+      <p>Fill the form. On submit, we open a pre-filled GitHub Issue.</p>
 
-    <div class="card">
-      <div class="muted" style="margin-bottom:10px">
-        🔧 Replace <code>PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE</code> with your Google Form embed link.
-      </div>
+      <form id="f">
+        <div class="row">
+          <div>
+            <label>Item category</label>
+            <select name="category" required>
+              <option value="">Select…</option>
+              <option>Jewelry</option>
+              <option>Keys</option>
+              <option>Phone / Electronics</option>
+              <option>Wallet / Cards</option>
+              <option>Bag / Clothing</option>
+              <option>Documents</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Where lost</label>
+            <input name="place" placeholder="e.g. Zürich, Sihlcity / tram / mall" required />
+          </div>
+        </div>
 
-      <iframe src="PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE" loading="lazy"></iframe>
-    </div>
+        <div class="row">
+          <div>
+            <label>Date lost</label>
+            <input name="date" type="date" required />
+          </div>
+          <div>
+            <label>How can finders contact you?</label>
+            <input name="contact" placeholder="e.g. Telegram @yourhandle (recommended)" required />
+          </div>
+        </div>
+
+        <div>
+          <label>Short title</label>
+          <input name="title" placeholder="e.g. Single gold earring (pair missing)" required />
+        </div>
+
+        <div>
+          <label>Description</label>
+          <textarea name="desc" placeholder="What it looks like, where you were, any key identifiers…" required></textarea>
+        </div>
+
+        <div class="btnrow">
+          <button class="btn primary" type="submit">Create GitHub Issue</button>
+          <a class="btn" href="./index.html">Back</a>
+        </div>
+
+        <div class="hint">Change <span class="k">GITHUB_USER</span> and <span class="k">GITHUB_REPO</span> once.</div>
+      </form>
+    </section>
   </div>
+
+<script>
+  // ✅ CHANGE THIS ONCE
+  const GITHUB_USER = "YOUR_GITHUB_USER";
+  const GITHUB_REPO = "YOUR_REPO";
+
+  const form = document.getElementById("f");
+  function enc(s){ return encodeURIComponent(s ?? ""); }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    const category = data.get("category");
+    const place = data.get("place");
+    const date = data.get("date");
+    const title = data.get("title");
+    const contact = data.get("contact");
+    const desc = data.get("desc");
+
+    const issueTitle = `LOST: ${category} — ${title} (${place})`;
+
+    const body =
+`## LOST item
+
+**Category:** ${category}
+**Where lost:** ${place}
+**Date lost:** ${date}
+**Contact:** ${contact}
+
+### Description
+${desc}
+`;
+
+    const url = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/issues/new?title=${enc(issueTitle)}&body=${enc(body)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+</script>
 </body>
 </html>
