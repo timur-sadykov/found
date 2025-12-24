@@ -2,108 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FOUND — Lost & Found that actually works</title>
-  <meta name="description" content="A simple, free lost-and-found flow. Found something? Lost something? Start here." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FOUND — Simple Lost & Found</title>
+  <meta name="description" content="A free, simple way to return lost items. No accounts. No ads. Just people helping people." />
 
   <style>
     :root{
-      --bg:#070a12;
-      --bg2:#0b1020;
-      --card:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.12);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.68);
-      --accent:#7c5cff;
-      --good:#22c55e;
-      --radius:18px;
-      --shadow:0 30px 90px rgba(0,0,0,.6);
-      --max:1080px;
+      --bg:#0a0a0a;
+      --panel:#111;
+      --line:#1f1f1f;
+      --text:#f2f2f2;
+      --muted:#9a9a9a;
+      --accent:#ffffff;
+      --radius:16px;
+      --max:960px;
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg);
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(124,92,255,.25), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(34,197,94,.2), transparent 60%),
-        linear-gradient(180deg,var(--bg),var(--bg2));
     }
 
-    .wrap{max-width:var(--max);margin:auto;padding:28px 18px 80px}
+    a{color:inherit;text-decoration:none}
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:40px 20px 80px;
+    }
 
     header{
-      display:flex;justify-content:space-between;align-items:center;
-      margin-bottom:28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:80px;
     }
 
-    .logo{
-      display:flex;align-items:center;gap:12px;
-      font-weight:900;letter-spacing:.4px;
+    .brand{
+      font-weight:800;
+      letter-spacing:.5px;
+      font-size:16px;
     }
 
-    .icon{
-      width:42px;height:42px;border-radius:14px;
-      background:linear-gradient(135deg,var(--accent),var(--good));
-      box-shadow:var(--shadow);
+    .badge{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
     }
 
     .hero{
-      display:grid;grid-template-columns:1.2fr .8fr;gap:20px;
-    }
-    @media(max-width:900px){.hero{grid-template-columns:1fr}}
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:24px;
-      box-shadow:var(--shadow);
+      text-align:center;
     }
 
     h1{
-      font-size:44px;line-height:1.05;margin:0 0 14px;
-      font-weight:900;
+      font-size:56px;
+      margin:0 0 16px;
+      letter-spacing:1px;
     }
-    h1 span{color:var(--accent)}
 
-    p{color:var(--muted);line-height:1.6}
+    .subtitle{
+      color:var(--muted);
+      font-size:18px;
+      max-width:520px;
+      margin:0 auto 40px;
+      line-height:1.5;
+    }
 
     .actions{
-      display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:48px;
     }
 
     .btn{
-      padding:14px 18px;border-radius:14px;
+      padding:16px 22px;
+      border-radius:var(--radius);
       border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--text);text-decoration:none;
+      background:var(--panel);
       font-weight:700;
-      display:inline-flex;align-items:center;gap:10px;
       transition:.15s;
     }
-    .btn:hover{transform:translateY(-1px)}
-    .btn.found{background:rgba(34,197,94,.25);border-color:rgba(34,197,94,.5)}
-    .btn.lost{background:rgba(124,92,255,.25);border-color:rgba(124,92,255,.5)}
+
+    .btn:hover{
+      border-color:var(--accent);
+      transform:translateY(-1px);
+    }
+
+    .btn.primary{
+      background:var(--accent);
+      color:#000;
+    }
+
+    .note{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:80px 0 40px;
+    }
+
+    .how{
+      max-width:600px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .how h2{
+      font-size:22px;
+      margin-bottom:24px;
+    }
 
     .steps{
-      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;
+      display:grid;
+      gap:18px;
     }
-    @media(max-width:600px){.steps{grid-template-columns:1fr}}
 
     .step{
-      background:rgba(255,255,255,.04);
       border:1px solid var(--line);
-      border-radius:14px;padding:14px;
+      border-radius:var(--radius);
+      padding:18px;
+      background:var(--panel);
+      color:var(--muted);
+      font-size:15px;
     }
-    .step b{display:block;margin-bottom:6px}
 
     footer{
-      margin-top:30px;
-      display:flex;justify-content:space-between;flex-wrap:wrap;
-      color:var(--muted);font-size:12px;
+      margin-top:80px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
     }
   </style>
 </head>
@@ -112,67 +150,55 @@
   <div class="wrap">
 
     <header>
-      <div class="logo">
-        <div class="icon"></div>
-        FOUND
-      </div>
-      <div>Free • No accounts</div>
+      <div class="brand">FOUND</div>
+      <div class="badge">Free • No accounts</div>
     </header>
 
     <section class="hero">
+      <h1>FOUND</h1>
 
-      <div class="card">
-        <h1><span>Lost</span> something?<br><span>Found</span> something?</h1>
-        <p>
-          FOUND is a simple lost-and-found flow.
-          No logins. No noise. Just post or search and reconnect people with their stuff.
-        </p>
+      <p class="subtitle">
+        A simple, free way to help lost things find their way home.
+      </p>
 
-        <div class="actions">
-          <a class="btn found" href="./found.html">➕ I FOUND something</a>
-          <a class="btn lost" href="./lost.html">🔎 I LOST something</a>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <b>1. Post or search</b>
-            Describe the item — short and clear.
-          </div>
-          <div class="step">
-            <b>2. Verify ownership</b>
-            Ask for a detail only the real owner knows.
-          </div>
-          <div class="step">
-            <b>3. Contact safely</b>
-            No private info. Public meeting.
-          </div>
-          <div class="step">
-            <b>4. Return & done</b>
-            Item back. Karma up.
-          </div>
-        </div>
+      <div class="actions">
+        <a class="btn primary" href="./found.html">
+          I FOUND something
+        </a>
+        <a class="btn" href="./lost.html">
+          I LOST something
+        </a>
       </div>
 
-      <div class="card">
-        <h3>Safety first</h3>
-        <p>
-          Never post your home address.  
-          Always verify ownership.  
-          Meet in public places only.
-        </p>
+      <p class="note">
+        No ads. No tracking. No registration.<br>
+        Just people helping people.
+      </p>
+    </section>
 
-        <h3 style="margin-top:18px">What this is</h3>
-        <p>
-          A minimal tool for cities, buildings, campuses, events.
-          Works on any phone. Share the link anywhere.
-        </p>
+    <div class="divider"></div>
+
+    <section class="how">
+      <h2>How it works</h2>
+
+      <div class="steps">
+        <div class="step">
+          Post what you found or lost — short and clear.
+        </div>
+        <div class="step">
+          The real owner recognizes it and contacts you.
+        </div>
+        <div class="step">
+          Verify ownership with a private detail.
+        </div>
+        <div class="step">
+          Meet safely and return the item.
+        </div>
       </div>
-
     </section>
 
     <footer>
-      <div>© FOUND</div>
-      <div>Lost & Found — done right</div>
+      Built for real life. Open by design.
     </footer>
 
   </div>
