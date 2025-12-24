@@ -24,16 +24,66 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--txt);
-      background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(124,92,255,.35), transparent 60%),
-        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,.22), transparent 60%),
-        radial-gradient(700px 450px at 55% 90%, rgba(245,158,11,.18), transparent 60%),
-        linear-gradient(180deg, #070a12, var(--bg) 30%, #070a12);
-    }
+    <body>
+  <main class="container">
+    <section class="hero">
+      <h1>FOUND.</h1>
+      <p class="tagline">
+        A free place to help lost things find their way home.
+      </p>
+
+      <div class="actions">
+        <a
+          class="btn primary"
+          href="FOUND_FORM_URL"
+          target="_blank"
+          rel="noopener"
+        >
+          I FOUND something
+        </a>
+
+        <a
+          class="btn secondary"
+          href="LOST_FORM_URL"
+          target="_blank"
+          rel="noopener"
+        >
+          I LOST something
+        </a>
+      </div>
+
+      <p class="meta">
+        Free. No accounts. No ads. No tracking.<br />
+        Just people helping people.
+      </p>
+    </section>
+
+    <section class="how">
+      <h2>How it works</h2>
+      <ol>
+        <li>You post what you found or lost.</li>
+        <li>We publish it in our public board.</li>
+        <li>The right person recognizes it and contacts you.</li>
+      </ol>
+    </section>
+
+    <section class="trust">
+      <p>
+        FOUND does not store sensitive data, sell information,
+        or require registration.
+        <br />
+        This project exists to solve a simple human problem —
+        returning lost things.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Built by humans. Hosted simply. Open by default.
+      </p>
+    </footer>
+  </main>
+</body>
     a{color:inherit}
     .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 70px}
     .top{
