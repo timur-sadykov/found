@@ -1,131 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FOUND</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FOUND</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root {
+  --bg: #0c0f14;
+  --panel: #121622;
+  --soft: #1a2033;
+  --text: #eaeaf0;
+  --muted: #9aa0b3;
+  --accent: #c9a86a;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0b0d12;
-      color: #eaeaea;
-      height: 100vh;
-    }
+* { box-sizing: border-box; }
 
-    .wrapper {
-      display: flex;
-      height: 100vh;
-    }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  background: radial-gradient(circle at top, #14192a 0%, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+}
 
-    .side {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 40px;
-      transition: background 0.3s ease;
-    }
+header {
+  text-align: center;
+  padding: 80px 20px 40px;
+}
 
-    .side.left {
-      background: linear-gradient(135deg, #11131a, #0b0d12);
-    }
+header h1 {
+  font-size: 3.5rem;
+  letter-spacing: 6px;
+  margin-bottom: 10px;
+}
 
-    .side.right {
-      background: linear-gradient(135deg, #0b0d12, #11131a);
-    }
+header span {
+  color: var(--accent);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
 
-    .side:hover {
-      background: #151821;
-    }
+header p {
+  max-width: 620px;
+  margin: 30px auto 0;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      letter-spacing: 3px;
-    }
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
 
-    p {
-      max-width: 420px;
-      color: #9aa0a6;
-      font-size: 1.1rem;
-    }
+.card {
+  background: linear-gradient(180deg, var(--panel), #0f1320);
+  border-radius: 22px;
+  padding: 50px 40px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
 
-    a.button {
-      margin-top: 30px;
-      padding: 16px 34px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #fff;
-      background: #1f6feb;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.65);
+}
 
-    a.button.secondary {
-      background: #30363d;
-    }
+.card h2 {
+  font-size: 2.2rem;
+  margin: 0 0 10px;
+}
 
-    a.button:hover {
-      background: #388bfd;
-      transform: translateY(-2px);
-    }
+.card p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
 
-    footer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-    }
+.card ul {
+  margin: 30px 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
 
-    footer span {
-      color: #888;
-    }
+.card ul li {
+  margin-bottom: 10px;
+}
 
-    @media (max-width: 900px) {
-      .wrapper {
-        flex-direction: column;
-      }
-    }
-  </style>
+.button {
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d2b77a, #b38a44);
+  color: #0c0f14;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(201,168,106,0.35);
+}
+
+footer {
+  text-align: center;
+  padding-bottom: 40px;
+  color: #6b7085;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 6px 0;
+}
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<header>
+  <h1>FOUND</h1>
+  <span>lost & found — human way</span>
+  <p>
+    Things get lost.  
+    Sometimes they are found by the right people.  
+    This is a quiet place where they can meet again.
+  </p>
+</header>
 
-  <div class="side left">
-    <h1>FOUND</h1>
-    <p>
-      You found something.<br>
-      Help it find its way back to the owner.
-    </p>
-    <a href="found.html" class="button">I FOUND an item</a>
+<section class="main">
+
+  <div class="card">
+    <div>
+      <h2>I found something</h2>
+      <p>
+        You found an item in a public place —  
+        a ring, keys, a phone, something small but important.
+      </p>
+      <ul>
+        <li>No registration</li>
+        <li>No fees</li>
+        <li>No middlemen</li>
+      </ul>
+    </div>
+    <a href="found.html" class="button">Post a found item</a>
   </div>
 
-  <div class="side right">
-    <h1>LOST</h1>
-    <p>
-      You lost something.<br>
-      Maybe someone already found it.
-    </p>
-    <a href="lost.html" class="button secondary">I LOST an item</a>
+  <div class="card">
+    <div>
+      <h2>I lost something</h2>
+      <p>
+        You lost something meaningful.  
+        Maybe someone honest already picked it up.
+      </p>
+      <ul>
+        <li>Browse recent finds</li>
+        <li>Contact directly</li>
+        <li>Trust your intuition</li>
+      </ul>
+    </div>
+    <a href="lost.html" class="button secondary">Search lost items</a>
   </div>
 
-</div>
+</section>
 
 <footer>
-  <span>No accounts. No ads. Free forever.</span>
+  <p>No ads. No tracking. No profit motive.</p>
+  <p>Built slowly. With respect.</p>
 </footer>
 
 </body>
