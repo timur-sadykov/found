@@ -1,239 +1,510 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FOUND — free lost & found</title>
-  <meta name="description" content="A free, simple lost & found board. Post an item you found or lost. No accounts. No ads." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FOUND — Zürich Lost & Found (free)</title>
+  <meta name="description" content="A simple, free, no-BS lost & found board for Zürich. Post lost or found items in 10 seconds." />
   <style>
     :root{
       --bg:#07090d;
-      --card:#0c101a;
-      --card2:#0b0f18;
-      --text:#e9eefc;
-      --muted:#a7b0c7;
+      --panel:#0d111a;
+      --panel2:#0a0e16;
+      --text:#e8ecff;
+      --muted:#a7b0d6;
       --line:rgba(255,255,255,.10);
-      --accent:#7cf7d4;
-      --accent2:#7aa7ff;
-      --warn:#ffb86b;
+      --glow:rgba(122,162,255,.22);
+      --good:#66ffcc;
+      --warn:#ffd166;
+      --bad:#ff5c8a;
+      --accent:#7aa2ff;
+      --accent2:#a78bfa;
       --shadow: 0 20px 60px rgba(0,0,0,.55);
-      --radius:18px;
+      --r:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
+      font-family:var(--sans);
       background:
-        radial-gradient(900px 600px at 15% 15%, rgba(122,167,255,.18), transparent 55%),
-        radial-gradient(900px 600px at 85% 20%, rgba(124,247,212,.16), transparent 60%),
-        radial-gradient(700px 500px at 55% 90%, rgba(255,184,107,.10), transparent 55%),
-        linear-gradient(180deg, #04060a 0%, var(--bg) 100%);
-      overflow-x:hidden;
+        radial-gradient(900px 500px at 15% 0%, rgba(122,162,255,.18), transparent 60%),
+        radial-gradient(700px 420px at 85% 10%, rgba(167,139,250,.16), transparent 60%),
+        radial-gradient(700px 420px at 50% 110%, rgba(102,255,204,.08), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.35;
     }
     a{color:inherit}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 70px}
+    .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 70px}
     .top{
-      display:flex;align-items:center;justify-content:space-between;gap:14px;
-      position:sticky;top:0;padding:14px 0;backdrop-filter: blur(10px);
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+      margin-bottom:14px;
     }
-    .brand{display:flex;align-items:center;gap:12px}
+    .brand{
+      display:flex;gap:12px;align-items:center;
+    }
     .logo{
       width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(124,247,212,.95), rgba(122,167,255,.9));
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-      position:relative;overflow:hidden;
+      background:
+        radial-gradient(18px 18px at 30% 35%, rgba(255,255,255,.35), transparent 60%),
+        linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 40px rgba(122,162,255,.18);
+      position:relative;
     }
     .logo:after{
-      content:"";position:absolute;inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-      transform: rotate(25deg);
-      animation: shine 5.5s linear infinite;
+      content:"";
+      position:absolute;inset:1px;border-radius:13px;
+      background:rgba(0,0,0,.28);
+      mix-blend-mode:multiply;
     }
-    @keyframes shine{0%{transform:translateX(-40%) rotate(25deg)}100%{transform:translateX(40%) rotate(25deg)}}
-    .brand h1{font-size:16px;margin:0;letter-spacing:.08em}
+    .title h1{font-size:18px;margin:0;letter-spacing:.6px}
+    .title p{margin:2px 0 0;color:var(--muted);font-size:13px}
+    .pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     .pill{
-      font-size:12px;color:var(--muted);border:1px solid var(--line);
-      padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.03);
+      font-family:var(--mono);
+      font-size:12px;
+      padding:8px 10px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(255,255,255,.03);
+      color:var(--muted);
     }
+
     .hero{
       margin-top:16px;
+      padding:18px;
       border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
-      box-shadow: var(--shadow);
-      padding:28px;
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;inset:-2px;
+      background:radial-gradient(600px 160px at 18% 0%, rgba(122,162,255,.18), transparent 55%);
+      pointer-events:none;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.3fr .9fr;
+      gap:18px;
+      position:relative;
+    }
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns:1fr}
+      .pillbar{justify-content:flex-start}
+      .top{flex-direction:column;align-items:flex-start}
+    }
+
+    .kicker{
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
+    .big{
+      margin:8px 0 10px;
+      font-size:34px;
+      letter-spacing:-.5px;
+      line-height:1.06;
+    }
+    .sub{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:15px;
+      max-width:54ch;
+    }
+    .ctaRow{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      cursor:pointer;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:11px 14px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(122,162,255,.45); background: rgba(122,162,255,.08);}
+    .btn.primary{
+      border-color: rgba(122,162,255,.45);
+      background: linear-gradient(135deg, rgba(122,162,255,.22), rgba(167,139,250,.14));
+      box-shadow: 0 14px 45px rgba(122,162,255,.14);
+    }
+    .btn.good:hover{border-color: rgba(102,255,204,.55); background: rgba(102,255,204,.10);}
+    .btn.bad:hover{border-color: rgba(255,92,138,.55); background: rgba(255,92,138,.10);}
+    .icon{
+      width:18px;height:18px;display:inline-block;flex:0 0 18px;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+    }
+
+    .rules{
+      background:linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.28));
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      padding:14px;
+    }
+    .rules h3{margin:0 0 8px;font-size:14px}
+    .rules ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
+    .rules li{margin:6px 0}
+    .tagline{
+      margin-top:10px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:rgba(232,236,255,.82);
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+
+    .panel{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:rgba(255,255,255,.02);
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    .panelHead{
+      padding:12px 14px;
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      border-bottom:1px solid var(--line);
+      background:rgba(0,0,0,.12);
+    }
+    .panelHead .left{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    }
+    .search{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    input[type="search"], select{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+      min-width: 220px;
+    }
+    select{min-width:160px}
+    input[type="search"]::placeholder{color:rgba(167,176,214,.65)}
+    .smallBtn{
+      padding:9px 12px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);cursor:pointer;color:var(--text);
+      font-weight:600;
+    }
+    .smallBtn:hover{border-color: rgba(122,162,255,.45); background: rgba(122,162,255,.08);}
+    .panelBody{padding:14px}
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){ .cards{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 620px){ .cards{grid-template-columns: 1fr;} }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.22));
+      border-radius:16px;
+      padding:12px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.40);
       position:relative;
       overflow:hidden;
     }
-    .hero:before{
-      content:"";position:absolute;inset:-2px;
-      background: radial-gradient(500px 260px at 20% 0%, rgba(124,247,212,.12), transparent 60%),
-                  radial-gradient(500px 260px at 80% 0%, rgba(122,167,255,.12), transparent 60%);
+    .card:before{
+      content:"";
+      position:absolute;inset:-2px;
+      background: radial-gradient(240px 90px at 15% 0%, var(--glow), transparent 60%);
+      opacity:.55;
       pointer-events:none;
     }
-    .heroGrid{display:grid;grid-template-columns: 1.2fr .8fr;gap:18px;align-items:start}
-    @media (max-width:900px){.heroGrid{grid-template-columns:1fr}}
-    .title{
-      font-size:40px;line-height:1.05;margin:0 0 10px;
-      letter-spacing:-0.02em;
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--mono);font-size:11px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color:rgba(232,236,255,.86);
     }
-    .subtitle{margin:0;color:var(--muted);font-size:15px;line-height:1.6;max-width:52ch}
-    .ctaRow{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 14px;border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      text-decoration:none;font-weight:650;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    .lost{border-color: rgba(255,92,138,.30)}
+    .found{border-color: rgba(102,255,204,.28)}
+    .badgeDot{width:7px;height:7px;border-radius:99px;background:var(--warn)}
+    .lost .badgeDot{background: var(--bad)}
+    .found .badgeDot{background: var(--good)}
+
+    .card h4{margin:10px 0 6px;font-size:15px}
+    .meta{color:var(--muted);font-size:12.5px;margin:0 0 8px}
+    .desc{color:rgba(232,236,255,.86);font-size:13px;margin:0 0 10px}
+    .row{
+      display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+      margin-top:8px;
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
-    .btnPrimary{
-      background: linear-gradient(135deg, rgba(124,247,212,.95), rgba(122,167,255,.92));
-      color:#071018;border:none;
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    .chip{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:6px 8px;
+      border-radius:12px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.10);
+      color:rgba(167,176,214,.9);
     }
-    .btnPrimary:hover{transform: translateY(-2px)}
-    .small{font-size:12px;color:var(--muted);margin-top:14px}
-    .card{
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      padding:16px;
+    .contact{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:7px 9px;
+      border-radius:12px;
+      border:1px solid rgba(122,162,255,.35);
+      background: rgba(122,162,255,.08);
+      text-decoration:none;
     }
-    .card h3{margin:0 0 8px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#cfe2ff}
-    .list{margin:0;padding-left:18px;color:var(--muted);line-height:1.55}
-    .grid2{
-      display:grid;grid-template-columns: repeat(3, 1fr);gap:12px;
-      margin-top:16px;
-    }
-    @media (max-width:900px){.grid2{grid-template-columns:1fr}}
-    .mini{
-      border:1px solid var(--line);
-      border-radius: 16px;
-      padding:14px;
-      background: rgba(0,0,0,.22);
-    }
-    .mini b{display:block;margin-bottom:6px}
-    .tag{display:inline-flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
-    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent)}
-    .dot2{background:var(--accent2)}
-    .dot3{background:var(--warn)}
-    .section{
-      margin-top:18px;
-      display:grid;grid-template-columns: 1fr 1fr;gap:14px;
-    }
-    @media (max-width:900px){.section{grid-template-columns:1fr}}
-    .iframeWrap{
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      overflow:hidden;
-      background: rgba(0,0,0,.25);
-      box-shadow: var(--shadow);
-    }
-    iframe{width:100%;height:760px;border:0}
     .footer{
-      margin-top:18px;color:var(--muted);font-size:12px;line-height:1.6;
-      border-top:1px solid var(--line);padding-top:16px;
+      margin-top:16px;
+      color:rgba(167,176,214,.78);
+      font-size:12px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
     }
-    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px;padding:2px 6px;border:1px solid var(--line);border-bottom-color:rgba(255,255,255,.18);
-      border-radius:8px;background:rgba(255,255,255,.03);color:#d7e6ff}
+    .footer .mono{font-family:var(--mono)}
+    .note{
+      margin-top:14px;
+      border:1px dashed rgba(255,255,255,.14);
+      border-radius:16px;
+      padding:12px;
+      color:rgba(167,176,214,.88);
+      background: rgba(0,0,0,.18);
+      font-size:13px;
+    }
+    .warn{
+      color:rgba(255,209,102,.95);
+      font-family:var(--mono);
+      font-size:12px;
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
+
     <div class="top">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>FOUND</h1>
-          <div class="pill">free lost & found • no accounts • no ads</div>
+        <div class="title">
+          <h1>FOUND — Zürich Lost & Found</h1>
+          <p>Free. Simple. No accounts. No drama.</p>
         </div>
       </div>
-      <div class="pill">Zurich / Switzerland — works worldwide</div>
+
+      <div class="pillbar">
+        <div class="pill">Status: MVP</div>
+        <div class="pill">100% free</div>
+        <div class="pill">10 sec to post</div>
+      </div>
     </div>
 
-    <div class="hero">
+    <section class="hero">
       <div class="heroGrid">
         <div>
-          <h2 class="title">Found something?<br/>Help it find its owner.</h2>
-          <p class="subtitle">
-            A simple public board to post <b>found</b> or <b>lost</b> items.
-            No login. No fees. Minimal clicks. Owners prove details privately.
+          <div class="kicker">Community board • Zürich • Public & free</div>
+          <div class="big">Lost something?<br/>Found something?</div>
+          <p class="sub">
+            Post it fast. Let people match the details. You decide what proof is needed.
+            This is just the platform.
           </p>
 
           <div class="ctaRow">
-            <a class="btn btnPrimary" href="#post-found">Post a FOUND item</a>
-            <a class="btn" href="#post-lost">Post a LOST item</a>
-            <a class="btn" href="#rules">How to avoid scammers</a>
+            <!-- TODO: replace href with your Google Forms URLs -->
+            <a class="btn primary good" id="btnFound" href="#" target="_blank" rel="noopener">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 7L10.5 16.5L4 10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Post a FOUND item
+            </a>
+
+            <a class="btn bad" id="btnLost" href="#" target="_blank" rel="noopener">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-4.4 7-10.5S15.9 3 12 6.3 5 3.6 5 10.5 12 21 12 21z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              </svg>
+              Post a LOST item
+            </a>
+
+            <!-- optional: link to your Google Sheet "public view" later -->
+            <a class="btn" href="#board">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+              View board
+            </a>
           </div>
 
-          <p class="small">
-            Tip: if you found something valuable, you can still report it to official lost & found later.
-            This site is just a fast community layer.
-          </p>
+          <div class="tagline">
+            “Minimal clicks. Max chance to reunite stuff.”
+          </div>
         </div>
 
-        <div class="card" id="rules">
-          <h3>Anti-scam rules</h3>
-          <ul class="list">
-            <li><b>Never</b> publish full unique details (serial number, full engraving, etc.).</li>
-            <li>Ask claimants to describe <b>2–3 hidden details</b> (scratches, exact text, missing stone, etc.).</li>
-            <li>Meet in a public place (mall security / police station) for handover.</li>
-            <li>If in doubt — don’t hand it over.</li>
+        <aside class="rules">
+          <h3>How it stays safe (without bureaucracy)</h3>
+          <ul>
+            <li><b>No addresses</b> in public posts. Meet in a public place.</li>
+            <li><b>Proof</b> is required: exact engraving/photo/receipt/detail.</li>
+            <li><b>Found posts</b> should hide 1 key detail (so scammers fail).</li>
+            <li>This is a <b>platform</b>, not a police service.</li>
           </ul>
-          <div style="margin-top:12px" class="tag"><span class="dot"></span> simple rules, strong result</div>
+          <div class="note">
+            <div class="warn">Anti-scam rule (simple):</div>
+            If you found an item, do NOT publish one unique detail.
+            Ask the claimant to tell you that detail first.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="board">
+      <div class="panelHead">
+        <div class="left">
+          <div class="kicker" style="margin:0">Board</div>
+          <div class="pill">demo data</div>
+          <div class="pill">next: Google Sheet</div>
+        </div>
+
+        <div class="search">
+          <input id="q" type="search" placeholder="Search: earring, gold, wallet, Sihlcity…" />
+          <select id="type">
+            <option value="all">All</option>
+            <option value="found">Found</option>
+            <option value="lost">Lost</option>
+          </select>
+          <button class="smallBtn" id="reset">Reset</button>
         </div>
       </div>
 
-      <div class="grid2">
-        <div class="mini">
-          <b>1) Post</b>
-          <div class="tag"><span class="dot2"></span> location + category + 1 photo</div>
-        </div>
-        <div class="mini">
-          <b>2) Verify</b>
-          <div class="tag"><span class="dot"></span> owner proves details privately</div>
-        </div>
-        <div class="mini">
-          <b>3) Return</b>
-          <div class="tag"><span class="dot3"></span> safe meetup + done</div>
+      <div class="panelBody">
+        <div class="cards" id="cards"></div>
+
+        <div class="footer">
+          <div class="mono">Contact is via the poster (Telegram/Email). Keep it public-safe.</div>
+          <div>Made with ❤️ in Zürich</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <div>
-        <h3 id="post-found" style="margin:18px 0 10px; letter-spacing:.06em; text-transform:uppercase; color:#cfe2ff; font-size:14px">
-          Post a FOUND item
-        </h3>
-        <div class="iframeWrap">
-          <!-- Replace the iframe src with your Google Form embed link -->
-          <iframe title="Found form" src="PASTE_FOUND_FORM_EMBED_LINK_HERE"></iframe>
-        </div>
-        <div class="small">If the form looks too tall/short: adjust <span class="kbd">iframe{height:760px}</span>.</div>
-      </div>
-
-      <div>
-        <h3 id="post-lost" style="margin:18px 0 10px; letter-spacing:.06em; text-transform:uppercase; color:#cfe2ff; font-size:14px">
-          Post a LOST item
-        </h3>
-        <div class="iframeWrap">
-          <!-- Replace the iframe src with your Google Form embed link -->
-          <iframe title="Lost form" src="PASTE_LOST_FORM_EMBED_LINK_HERE"></iframe>
-        </div>
-        <div class="small">You can also add a “reward (optional)” field. Keep it optional.</div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <b>Disclaimer:</b> This is a community platform. You’re responsible for complying with local rules and acting in good faith.
-      <br/>
-      Built as a public good. If you want to help: share the link.
-    </div>
   </div>
+
+  <script>
+    // ====== 1) PUT YOUR GOOGLE FORMS LINKS HERE ======
+    // Open your form -> click "Send" -> link icon -> copy URL
+    const GOOGLE_FORM_FOUND_URL = "PASTE_YOUR_FOUND_FORM_LINK_HERE";
+    const GOOGLE_FORM_LOST_URL  = "PASTE_YOUR_LOST_FORM_LINK_HERE";
+
+    // Hook buttons
+    const btnFound = document.getElementById("btnFound");
+    const btnLost  = document.getElementById("btnLost");
+    btnFound.href = GOOGLE_FORM_FOUND_URL;
+    btnLost.href  = GOOGLE_FORM_LOST_URL;
+
+    // ====== 2) DEMO DATA (replace with Google Sheet later) ======
+    const data = [
+      {
+        kind: "found",
+        title: "Single earring (gold) — Sihlcity area",
+        when: "Dec 2025",
+        where: "Zürich, Sihlcity / food area",
+        desc: "Found on a table near the ice cream spot. One detail is intentionally NOT published.",
+        tags: ["jewelry","gold","sihlcity"],
+        contact: "telegram:@your_handle",
+      },
+      {
+        kind: "lost",
+        title: "AirPods case (white)",
+        when: "Nov 2025",
+        where: "HB → Wiedikon (tram)",
+        desc: "Lost somewhere on the ride. Has a small scratch on the lid.",
+        tags: ["electronics","airpods","tram"],
+        contact: "email:you@example.com",
+      },
+      {
+        kind: "found",
+        title: "Keyring (2 keys + blue tag)",
+        when: "Oct 2025",
+        where: "Zürich, near station entrance",
+        desc: "Found near entrance. If it’s yours, tell me the exact text on the tag.",
+        tags: ["keys","tag"],
+        contact: "telegram:@your_handle",
+      }
+    ];
+
+    // ====== UI rendering ======
+    const cards = document.getElementById("cards");
+    const q = document.getElementById("q");
+    const type = document.getElementById("type");
+    const reset = document.getElementById("reset");
+
+    function esc(s){
+      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function render(items){
+      if(!items.length){
+        cards.innerHTML = `<div class="note">No matches. Try another keyword.</div>`;
+        return;
+      }
+      cards.innerHTML = items.map(x => {
+        const cls = x.kind === "found" ? "card found" : "card lost";
+        const badgeText = x.kind.toUpperCase();
+        const chips = (x.tags || []).slice(0,5).map(t => `<span class="chip">#${esc(t)}</span>`).join("");
+        const contact = esc(x.contact || "contact:—");
+        const contactHref = contact.startsWith("telegram:@")
+          ? "https://t.me/" + contact.replace("telegram:@","")
+          : (contact.startsWith("email:") ? "mailto:" + contact.replace("email:","") : "#");
+
+        return `
+          <article class="${cls}">
+            <span class="badge">
+              <span class="badgeDot"></span>${badgeText}
+            </span>
+            <h4>${esc(x.title)}</h4>
+            <p class="meta">${esc(x.when)} • ${esc(x.where)}</p>
+            <p class="desc">${esc(x.desc)}</p>
+            <div class="row">
+              <div>${chips}</div>
+              <a class="contact" href="${contactHref}" target="_blank" rel="noopener">${contact}</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function apply(){
+      const term = q.value.trim().toLowerCase();
+      const t = type.value;
+
+      const filtered = data.filter(x => {
+        if(t !== "all" && x.kind !== t) return false;
+        if(!term) return true;
+        const blob = `${x.kind} ${x.title} ${x.when} ${x.where} ${x.desc} ${(x.tags||[]).join(" ")} ${x.contact}`.toLowerCase();
+        return blob.includes(term);
+      });
+
+      render(filtered);
+    }
+
+    q.addEventListener("input", apply);
+    type.addEventListener("change", apply);
+    reset.addEventListener("click", () => {
+      q.value = "";
+      type.value = "all";
+      apply();
+    });
+
+    // initial render
+    apply();
+  </script>
 </body>
 </html>
