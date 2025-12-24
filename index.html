@@ -2,145 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FOUND — Lost & Found, simple</title>
-  <meta name="description" content="A dead-simple, free Lost & Found board. No accounts. No nonsense." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a FOUND item</title>
+
   <style>
     :root{
-      --bg:#07080b;
-      --card:#0e1117;
-      --muted:#9aa4b2;
-      --text:#e6edf3;
-      --line:#1f2630;
-      --accent:#8b5cf6;
-      --accent2:#22c55e;
-      --warn:#f59e0b;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 18px;
+      --bg:#05060a;
+      --panel:#0b0f17;
+      --text:#eaf0ff;
+      --muted:#9aa6c4;
+      --border:rgba(255,255,255,.12);
+      --accent:#7cc7ff;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(139,92,246,.18), transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, rgba(34,197,94,.12), transparent 55%),
-        radial-gradient(900px 600px at 60% 90%, rgba(245,158,11,.10), transparent 55%),
+        radial-gradient(800px 400px at 20% 0%, rgba(124,199,255,.12), transparent 55%),
         var(--bg);
+      color:var(--text);
     }
-    a{color:inherit}
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
-    .top{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:10px 0 18px;
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:760px;margin:0 auto;padding:28px 18px}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 16px;border:1px solid var(--border);border-radius:16px;
+      background:rgba(11,15,23,.75);
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
-    .dot{
-      width:12px;height:12px;border-radius:50%;
-      background: linear-gradient(135deg,var(--accent),#60a5fa);
-      box-shadow: 0 0 0 4px rgba(139,92,246,.12);
+    h1{margin:18px 0 6px;font-size:26px}
+    p{margin:0;color:var(--muted);line-height:1.5}
+    form{
+      margin-top:18px;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(11,15,23,.65);
     }
-    .pill{
-      font-size:12px;color:var(--muted);
-      border:1px solid var(--line); padding:8px 10px;border-radius:999px;
-      background: rgba(14,17,23,.7);
-    }
-    .hero{
+    label{
+      display:block;
       margin-top:14px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(14,17,23,.92), rgba(14,17,23,.65));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:26px;
+      font-size:13px;
+      color:#cfd8ff;
     }
-    h1{margin:0 0 10px;font-size:34px;line-height:1.12}
-    .sub{margin:0;color:var(--muted);font-size:15px;line-height:1.55;max-width:62ch}
-    .grid{
-      display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px;
+    input, textarea, select{
+      width:100%;
+      margin-top:6px;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-size:14px;
     }
-    @media (min-width:760px){ .grid{grid-template-columns:1fr 1fr} }
-    .card{
-      border:1px solid var(--line);
-      background: rgba(7,8,11,.25);
-      border-radius: var(--radius);
-      padding:18px;
+    textarea{min-height:110px;resize:vertical}
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
-    .card h2{margin:0 0 8px;font-size:18px}
-    .card p{margin:0 0 12px;color:var(--muted);line-height:1.55;font-size:14px}
-    .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    @media(max-width:700px){
+      .row{grid-template-columns:1fr}
+    }
+    .actions{
+      margin-top:18px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:11px 14px;border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(14,17,23,.85);
-      text-decoration:none;font-weight:700;font-size:14px;
-      transition: transform .08s ease, border-color .12s ease, background .12s ease;
+      padding:13px 18px;
+      border-radius:14px;
+      border:1px solid rgba(124,199,255,.35);
+      background:rgba(124,199,255,.12);
+      font-weight:700;
       cursor:pointer;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(139,92,246,.55)}
-    .btn.primary{background: linear-gradient(135deg, rgba(139,92,246,.95), rgba(96,165,250,.8)); border-color: transparent;}
-    .btn.green{background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(16,185,129,.7)); border-color: transparent;}
-    .mini{
-      margin-top:14px;
-      display:flex;flex-direction:column;gap:8px;
-      color:var(--muted);font-size:13px;line-height:1.5
-    }
-    .footer{
-      margin-top:18px;color:var(--muted);font-size:12px;line-height:1.6
-    }
-    .k{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    .btn:hover{border-color:rgba(124,199,255,.6)}
+    .note{
+      margin-top:12px;
       font-size:12px;
-      padding:2px 6px;border:1px solid var(--line);border-radius:8px;background: rgba(14,17,23,.7); color:#cbd5e1;
+      color:var(--muted);
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="top">
-      <div class="brand"><span class="dot"></span>FOUND</div>
-      <div class="pill">Free • No accounts • Works worldwide</div>
-    </div>
 
-    <section class="hero">
-      <h1>Lost & Found — the simple way.</h1>
-      <p class="sub">
-        If you found something (or lost something), post it in 30 seconds.
-        No signups, no fees, no “platform drama”.
-      </p>
+    <header>
+      <strong>FOUND</strong>
+      <a href="./index.html">← Home</a>
+    </header>
 
-      <div class="grid">
-        <div class="card">
-          <h2>I FOUND an item</h2>
-          <p>Post what you found, where, and how to claim it safely.</p>
-          <div class="btnrow">
-            <a class="btn primary" href="./found.html">Post a FOUND item</a>
-            <a class="btn" href="./lost.html">I LOST something</a>
-          </div>
+    <h1>Post a FOUND item</h1>
+    <p>
+      Describe what you found.  
+      Keep one detail secret — to verify the real owner later.
+    </p>
+
+    <!-- 👇 ФОРМА (пока никуда не отправляет — MVP) -->
+    <form>
+
+      <label>What did you find?</label>
+      <input placeholder="Example: Single gold earring" />
+
+      <div class="row">
+        <div>
+          <label>Where did you find it?</label>
+          <input placeholder="Example: Zürich, Sihlcity mall" />
         </div>
-
-        <div class="card">
-          <h2>I LOST an item</h2>
-          <p>Post what you lost + where. Found it? You can match and contact safely.</p>
-          <div class="btnrow">
-            <a class="btn green" href="./lost.html">Post a LOST item</a>
-            <a class="btn" href="./found.html">I FOUND something</a>
-          </div>
+        <div>
+          <label>Date / time (approx.)</label>
+          <input placeholder="Example: 24 Dec, evening" />
         </div>
       </div>
 
-      <div class="mini">
-        <div>Safety rule: never publish full serial numbers, full names, or your home address.</div>
-        <div>Claim rule: the claimant must describe a detail you didn’t publish (e.g. engraving, missing stone, exact pattern).</div>
+      <label>Category</label>
+      <select>
+        <option>Jewelry</option>
+        <option>Keys</option>
+        <option>Wallet / Cards</option>
+        <option>Phone / Electronics</option>
+        <option>Bag / Clothes</option>
+        <option>Other</option>
+      </select>
+
+      <label>Public description</label>
+      <textarea placeholder="Visible details: color, shape, size, condition…"></textarea>
+
+      <label>Secret detail (DO NOT publish)</label>
+      <input placeholder="Example: tiny engraving inside / missing stone" />
+
+      <label>How can the owner contact you?</label>
+      <input placeholder="Telegram @username or email" />
+
+      <div class="actions">
+        <button type="button" class="btn">
+          Submit (coming next)
+        </button>
+        <a class="btn" href="./index.html">Cancel</a>
       </div>
 
-      <div class="footer">
-        This site stores posts as GitHub Issues (free + no backend).
-        You can later replace it with a database if you want.
-        Repo setting lives in <span class="k">found.html</span> / <span class="k">lost.html</span>.
+      <div class="note">
+        This is a free community board.  
+        Meet in public places. Use common sense.
       </div>
-    </section>
+
+    </form>
   </div>
 </body>
 </html>
