@@ -3,18 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>I lost something — FOUND</title>
+  <title>FOUND — I Lost Something</title>
+  <meta name="description" content="Report a lost item safely." />
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:#0b0f19;color:rgba(255,255,255,.92)}
+    .wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+    a{color:inherit}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 12px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);font-weight:750}
+    .card{margin-top:14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);padding:14px}
+    .muted{color:rgba(255,255,255,.68);line-height:1.5}
+    iframe{width:100%;height:900px;border:0;border-radius:14px;background:#fff}
+    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px}
+  </style>
 </head>
-<body style="font-family:system-ui;max-width:720px;margin:40px auto;padding:0 16px;">
-  <h1>I lost something</h1>
-  <p>Shit happens. Let’s try to fix it.</p>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1 style="margin:0 0 6px">🔎 I lost something</h1>
+        <div class="muted">Describe your item. Be specific, but keep sensitive info private.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="index.html">← Home</a>
+        <a class="btn" href="found.html">I found something</a>
+      </div>
+    </div>
 
-  <p>
-    <a href="https://forms.gle/PASTE_YOUR_GOOGLE_FORM_LINK_HERE">
-      → Report lost item
-    </a>
-  </p>
+    <div class="card">
+      <b>Privacy rule:</b>
+      <div class="muted">Never post passport / full address / full phone. Use email or Telegram handle if needed.</div>
+    </div>
 
-  <p><a href="index.html">← back</a></p>
+    <div class="card">
+      <div class="muted" style="margin-bottom:10px">
+        🔧 Replace <code>PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE</code> with your Google Form embed link.
+      </div>
+
+      <iframe src="PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE" loading="lazy"></iframe>
+    </div>
+  </div>
 </body>
 </html>
