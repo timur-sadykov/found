@@ -1,1 +1,35 @@
-
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Browse • Found</title>
+  <style>
+    :root{color-scheme:dark;}
+    body{margin:0;font-family:system-ui;background:#0b0f14;color:#e7eef7;}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px;}
+    a{color:#9ad1ff;text-decoration:none;}
+    .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+          border-radius:14px;padding:16px;}
+    h1{margin:10px 0 6px;font-size:28px;}
+    p{margin:0 0 10px;color:#b7c3d3;line-height:1.45;}
+    ul{margin:10px 0 0;padding-left:18px;color:#cfe0f5;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="/">&larr; Home</a>
+    <h1>Browse items</h1>
+    <div class="card">
+      <p>Phase 1 (today): items are stored in Google Sheets.</p>
+      <ul>
+        <li>If you FOUND an item → <a href="/found.html">post it here</a></li>
+        <li>If you LOST an item → <a href="/lost.html">post it here</a></li>
+      </ul>
+      <p style="margin-top:12px">
+        Next: I’ll help you pull the Sheet into a JSON feed and render a real list here (still free).
+      </p>
+    </div>
+  </div>
+</body>
+</html>
