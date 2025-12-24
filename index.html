@@ -410,6 +410,7 @@
     btnLost.href  = GOOGLE_FORM_LOST_URL;
 
     // ====== 2) DEMO DATA (replace with Google Sheet later) ======
+    
     const data = [
   {
     kind: "found",
@@ -418,7 +419,7 @@
     where: "Zürich, Sihlcity / food area",
     desc: "Found on a table near the ice cream spot. One detail is intentionally NOT published.",
     tags: ["jewelry","gold","sihlcity"],
-    contact: "telegram:@johnsmith_zh",
+    contact: "telegram:@zurich_lostfound",
   },
   {
     kind: "lost",
@@ -427,7 +428,7 @@
     where: "HB → Wiedikon (tram)",
     desc: "Lost somewhere on the ride. Has a small scratch on the lid.",
     tags: ["electronics","airpods","tram"],
-    contact: "email:alex.meyer.zh@gmail.com",
+    contact: "email:alex.meyer.zurich@gmail.com",
   },
   {
     kind: "found",
@@ -436,9 +437,10 @@
     where: "Zürich, near station entrance",
     desc: "Found near entrance. If it’s yours, tell me the exact text on the tag.",
     tags: ["keys","tag"],
-    contact: "telegram:@lostfound_user",
+    contact: "telegram:@found_helper",
   }
 ];
+    ;
 
     // ====== UI rendering ======
     const cards = document.getElementById("cards");
